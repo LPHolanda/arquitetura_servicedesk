@@ -7,6 +7,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import br.usjt.arqsw.entity.Fila;
 
 /**
@@ -15,8 +20,20 @@ import br.usjt.arqsw.entity.Fila;
  *
  */
 
+@Repository
 public class FilaDAO {
 
+	private Connection conn;
+	
+	@Autowired
+	public FilaDAO(DataSource dataSource) throws IOException{
+		try {
+			this.conn = dataSource.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public ArrayList<Fila> listarFilas() throws IOException {
 		String query = "select id_fila, nm_fila from fila";
 		ArrayList<Fila> lista = new ArrayList<>();

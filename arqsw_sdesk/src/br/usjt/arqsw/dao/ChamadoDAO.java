@@ -8,6 +8,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
 import br.usjt.arqsw.entity.Chamado;
 import br.usjt.arqsw.entity.Fila;
 
@@ -17,8 +22,20 @@ import br.usjt.arqsw.entity.Fila;
  *
  */
 
+@Repository
 public class ChamadoDAO {
 
+	private Connection conn;
+	
+	@Autowired
+	public ChamadoDAO(DataSource dataSource) throws IOException{
+		try {
+			this.conn = dataSource.getConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public int criarChamado(Chamado chamado) {
 		Date dataAbertura = new Date(chamado.getDataAbertura().getTime());
 		Date dataFechamento = new Date(chamado.getDataFechamento().getTime());
