@@ -1,8 +1,26 @@
 package br.usjt.arqsw.entity;
 
-public class Login {
+import java.io.Serializable;
 
+import javax.persistence.Entity;
+
+import com.sun.istack.internal.NotNull;
+
+/**
+ * 
+ * @author Leandro Pinheiro de Holanda 816113762 
+ *
+ */
+
+@Entity
+public class Login implements Serializable{
+
+	private static final long serialVersionUID = 1L;
+	
+	@NotNull
 	private String usuario;
+	
+	@NotNull
 	private String senha;
 	
 	public String getUsuario() {

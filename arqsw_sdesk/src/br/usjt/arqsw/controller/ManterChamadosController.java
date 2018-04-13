@@ -25,14 +25,17 @@ import br.usjt.arqsw.service.FilaService;
 
 @Controller
 public class ManterChamadosController {
+	@Autowired
 	private ChamadoService chamadoService;
+	
+	@Autowired
 	private FilaService filaService;
 
-	@Autowired
-	public ManterChamadosController() {
+	
+	/*public ManterChamadosController() {
 		chamadoService = new ChamadoService();
 		filaService = new FilaService();
-	}
+	}*/
 
 	@RequestMapping("index")
 	public String inicio() {
@@ -72,6 +75,34 @@ public class ManterChamadosController {
 			return "ChamadoListarExibir";
 
 		} catch (IOException e) {
+			e.printStackTrace();
+			return "Erro";
+		}
+	}
+	
+	@RequestMapping("/novo_chamado")
+	public String novoChamado(Model model) {
+		try {
+			model.addAttribute("filas", listarFilas());
+			return "NovoChamado";
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Erro";
+		}
+	}
+	
+	@RequestMapping("/criar_chamado")
+	public String criarChamado(@Valid Chamado chamado, BindingResult result, Model model) {
+		try {
+			if (result.hasFieldErrors()) {
+				model.addAttribute("filas", listarFilas());
+				System.out.println("Deu erro " + result.toString());
+				return "NovoChamado";
+			}
+			int numeroChamado = chamadoService.criarChamado(chamado);
+			model.addAttribute("numeroChamado", numeroChamado);
+			return "ChamadoSalvo";
+		}catch (IOException e) {
 			e.printStackTrace();
 			return "Erro";
 		}

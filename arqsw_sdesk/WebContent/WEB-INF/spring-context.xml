@@ -26,6 +26,6 @@
 	</bean>
 	
 	<mvc:interceptors>
-		<bean class="br.usjt.arqsw.controller.interceptor.AutorizadorInterceptor"/>
+		<bean class="br.usjt.arqsw.interceptor.AutorizadorInterceptor"/>
 	</mvc:interceptors> 
 </beans>

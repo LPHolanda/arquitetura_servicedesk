@@ -1,12 +1,13 @@
 package br.usjt.arqsw.dao;
 
+import static java.sql.Date.valueOf;
+import static java.time.LocalDate.now;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.sql.DataSource;
 
@@ -36,10 +37,26 @@ public class ChamadoDAO {
 		}
 	}
 	
-	public int criarChamado(Chamado chamado) {
-		Date dataAbertura = new Date(chamado.getDataAbertura().getTime());
-		Date dataFechamento = new Date(chamado.getDataFechamento().getTime());
-		return 0;
+	public int criarChamado(Chamado chamado) throws IOException {
+		String query = "insert into chamado(descricao, status, dt_abertura, id_fila) values (?, ?, ?, ?)";
+		int numeroChamado = -1;
+		try {
+			PreparedStatement pst = conn.prepareStatement(query);
+			pst.setString(1, chamado.getDescricao());
+			pst.setString(2, Chamado.ABERTO);
+			pst.setDate(3, valueOf(now()));
+			pst.setInt(4, chamado.getFila().getId());
+			pst.execute();
+			query = "select id_chamado from chamado order by id_chamado desc limit 1";
+			pst = conn.prepareStatement(query);
+			ResultSet rs = pst.executeQuery();
+			if (rs.next()) {
+				numeroChamado = rs.getInt("id_chamado");
+			}
+		} catch (SQLException e) {
+			throw new IOException(e);
+		}
+		return numeroChamado;
 	}
 
 	public ArrayList<Chamado> listarChamados(Fila fila) throws IOException{
@@ -47,8 +64,7 @@ public class ChamadoDAO {
 		String query = "select c.id_chamado, c.descricao, c.dt_abertura, f.nm_fila "+
 				"from chamado c, fila f where c.id_fila = f.id_fila and c.id_fila=?";
 		
-		try(Connection conn = ConnectionFactory.getConnection() ;
-			PreparedStatement pst = conn.prepareStatement(query);){
+		try(PreparedStatement pst = conn.prepareStatement(query);){
 			pst.setInt(1, fila.getId());
 			
 			try(ResultSet rs = pst.executeQuery();){

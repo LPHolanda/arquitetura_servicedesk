@@ -37,8 +37,7 @@ public class FilaDAO {
 	public ArrayList<Fila> listarFilas() throws IOException {
 		String query = "select id_fila, nm_fila from fila";
 		ArrayList<Fila> lista = new ArrayList<>();
-		try(Connection conn = ConnectionFactory.getConnection();
-			PreparedStatement pst = conn.prepareStatement(query);
+		try(PreparedStatement pst = conn.prepareStatement(query);
 			ResultSet rs = pst.executeQuery();){
 			
 			while(rs.next()) {
@@ -59,8 +58,7 @@ public class FilaDAO {
 		fila.setId(id);
 		String query = "select nm_fila from fila where id_fila=?";
 
-		try (Connection conn = ConnectionFactory.getConnection();
-				PreparedStatement pst = conn.prepareStatement(query);) {
+		try (PreparedStatement pst = conn.prepareStatement(query);) {
 			pst.setInt(1, id);
 			try (ResultSet rs = pst.executeQuery();) {
 

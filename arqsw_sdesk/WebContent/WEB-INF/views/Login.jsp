@@ -28,15 +28,15 @@
 	    	<form action="fazer_login" method="post">
 	    		<div class="row">
 	                <div class="form-group col-md-4">
-	                    <label for="username">Digite o usuário:</label>
-	                    <form:errors path="login.username" cssStyle="color:red"/><br>
+	                    <label for="usuario">Digite o usuário:</label>
+	                    <form:errors path="login.usuario" cssStyle="color:red"/><br>
 	                    <input type="text" class="form-control" name=username maxlength="50">
 	                </div>
 	            </div>
 	            <div class="row">
 	                <div class="form-group col-md-4">
-	                    <label for="username">Digite a senha:</label>
-	                    <form:errors path="login.password" cssStyle="color:red"/><br>
+	                    <label for="senha">Digite a senha:</label>
+	                    <form:errors path="login.senha" cssStyle="color:red"/><br>
 	                    <input type="password" class="form-control" name=password maxlength="50">
 	                </div>
 	            </div>
