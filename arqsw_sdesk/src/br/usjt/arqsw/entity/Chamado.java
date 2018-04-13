@@ -3,10 +3,13 @@ package br.usjt.arqsw.entity;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
 /**
@@ -24,23 +27,27 @@ private static final long serialVersionUID = 1L;
 	public static final String FECHADO = "fechado";
 	
 	@NotNull(message="O chamado não pode ser vaziao")
-	@Min(value=1, message="O chamado não pode ser vazio")
+	@Size(max=100)
+	@Id
+	@Column(name="id_chamado")
 	private int numero;
 	
 	@NotNull
-	@Size(min=5, max=100, message="A descricao deve ter entre 5 e 100 caracteres.")
+	@Size(max=45)
 	private String descricao;
 	
 	@NotNull
 	@Size(min=5, max=10, message="O status dever ter entre 5 e 10 caracteres.")
 	private String status;
 	
-	@Past
+	@Column(name="dt_abertura")
 	private Date dataAbertura;
 	
-	@Past
+	@Column(name="dt_fechamento")
 	private Date dataFechamento;
 	
+	@ManyToOne
+	@JoinColumn(name = "id_fila")
 	private Fila fila;
 
 	public int getNumero() {
