@@ -2,7 +2,6 @@
     <wb-module deploy-name="arqsw_sdesk">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/META-INF"/>
         <property name="context-root" value="arqsw_sdesk"/>
         <property name="java-output-path" value="/arqsw_sdesk/build/classes"/>
     </wb-module>

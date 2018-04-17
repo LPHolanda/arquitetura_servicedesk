@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -22,7 +21,6 @@ public class Fila implements Serializable{
 
 	@Id
 	@NotNull(message="A fila não pode ser vazia")
-	@Size(max=100)
 	@Column(name="id_fila")
 	private int id;
 	

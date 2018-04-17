@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -26,9 +25,8 @@ private static final long serialVersionUID = 1L;
 	public static final String ABERTO = "aberto";
 	public static final String FECHADO = "fechado";
 	
-	@NotNull(message="O chamado não pode ser vaziao")
-	@Size(max=100)
 	@Id
+	@NotNull(message="O chamado não pode ser vaziao")
 	@Column(name="id_chamado")
 	private int numero;
 	
@@ -46,6 +44,7 @@ private static final long serialVersionUID = 1L;
 	@Column(name="dt_fechamento")
 	private Date dataFechamento;
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "id_fila")
 	private Fila fila;

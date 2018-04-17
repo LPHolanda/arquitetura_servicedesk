@@ -2,6 +2,7 @@ package br.usjt.arqsw.dao;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -10,9 +11,7 @@ import javax.sql.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.sql.PreparedStatement;
-
-import br.usjt.arqsw.entity.Login;
+import br.usjt.arqsw.entity.Usuario;
 
 /**
  * 
@@ -21,12 +20,12 @@ import br.usjt.arqsw.entity.Login;
  */
 
 @Repository
-public class LoginDAO {
+public class UsuarioDAO {
 
 	private Connection conn;
 	
 	@Autowired
-	public LoginDAO(DataSource dataSource) throws IOException{
+	public UsuarioDAO(DataSource dataSource) throws IOException{
 		try {
 			this.conn = dataSource.getConnection();
 		} catch (SQLException e) {
@@ -34,7 +33,7 @@ public class LoginDAO {
 		}
 	}
 	
-	public boolean fazerLogin(Login login) throws IOException{
+	public boolean fazerLogin(Usuario login) throws IOException{
 		String query = "select * from usuario where usuario = ? and senha = ?";
 		
 		try(PreparedStatement pst = conn.prepareStatement(query)){

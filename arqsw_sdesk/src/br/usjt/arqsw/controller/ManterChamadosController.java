@@ -1,9 +1,9 @@
 package br.usjt.arqsw.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +24,7 @@ import br.usjt.arqsw.service.FilaService;
  */
 
 @Controller
+@Transactional
 public class ManterChamadosController {
 	@Autowired
 	private ChamadoService chamadoService;
@@ -31,21 +32,11 @@ public class ManterChamadosController {
 	@Autowired
 	private FilaService filaService;
 
-	
-	/*public ManterChamadosController() {
-		chamadoService = new ChamadoService();
-		filaService = new FilaService();
-	}*/
 
 	@RequestMapping("index")
 	public String inicio() {
 		return "index";
 	}
-
-	private List<Fila> listarFilas() throws IOException {
-		return filaService.listarFilas();
-	}
-
 
 	@RequestMapping("/listar_filas_exibir")
 	public String listarFilasExibir(Model model) {
@@ -69,7 +60,7 @@ public class ManterChamadosController {
 			fila = filaService.carregar(fila.getId());
 			model.addAttribute("fila", fila);
 			
-			ArrayList<Chamado> chamados = chamadoService.listarChamados(fila);
+			List<Chamado> chamados = chamadoService.listarChamados(fila);
 			model.addAttribute("chamados", chamados);
 
 			return "ChamadoListarExibir";
@@ -106,5 +97,9 @@ public class ManterChamadosController {
 			e.printStackTrace();
 			return "Erro";
 		}
+	}
+	
+	private List<Fila> listarFilas() throws IOException {
+		return filaService.listarFilas();
 	}
 }

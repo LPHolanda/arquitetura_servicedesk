@@ -5,8 +5,8 @@ import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.usjt.arqsw.dao.LoginDAO;
-import br.usjt.arqsw.entity.Login;
+import br.usjt.arqsw.dao.UsuarioDAO;
+import br.usjt.arqsw.entity.Usuario;
 
 /**
  * 
@@ -15,12 +15,12 @@ import br.usjt.arqsw.entity.Login;
  */
 
 @Service
-public class LoginService {
+public class UsuarioService {
 	
 	@Autowired
-	private LoginDAO dao;
+	private UsuarioDAO dao;
 	
-	public boolean fazerLogin(Login login) throws IOException{
+	public boolean fazerLogin(Usuario login) throws IOException{
 		return dao.fazerLogin(login);
 	}
 }

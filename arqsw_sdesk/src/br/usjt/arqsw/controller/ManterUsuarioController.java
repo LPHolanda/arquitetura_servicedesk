@@ -3,6 +3,7 @@ package br.usjt.arqsw.controller;
 import java.io.IOException;
 
 import javax.servlet.http.HttpSession;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,8 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import br.usjt.arqsw.entity.Login;
-import br.usjt.arqsw.service.LoginService;
+import br.usjt.arqsw.entity.Usuario;
+import br.usjt.arqsw.service.UsuarioService;
 
 /**
  * 
@@ -20,13 +21,14 @@ import br.usjt.arqsw.service.LoginService;
  */
 
 @Controller
-public class ManterLoginController {
+@Transactional
+public class ManterUsuarioController {
 
 	@Autowired
-	private LoginService loginService;
+	private UsuarioService loginService;
 	
 	@RequestMapping("/fazer_login")
-	public String login(@Valid Login login, BindingResult result, HttpSession session) {
+	public String login(@Valid Usuario login, BindingResult result, HttpSession session) {
 		try {
 			if (result.hasFieldErrors()) {
 				System.out.println("Deu erro " + result.toString());
@@ -47,6 +49,12 @@ public class ManterLoginController {
 
 	@RequestMapping("/login")
 	public String login() {
+		return "Login";
+	}
+	
+	@RequestMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
 		return "Login";
 	}
 }
