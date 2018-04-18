@@ -1,14 +1,11 @@
 package br.usjt.arqsw.dao;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
-import javax.sql.DataSource;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import br.usjt.arqsw.entity.Usuario;
@@ -22,34 +19,13 @@ import br.usjt.arqsw.entity.Usuario;
 @Repository
 public class UsuarioDAO {
 
-	private Connection conn;
+	@PersistenceContext
+	EntityManager manager;
 	
-	@Autowired
-	public UsuarioDAO(DataSource dataSource) throws IOException{
-		try {
-			this.conn = dataSource.getConnection();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public boolean fazerLogin(Usuario login) throws IOException{
-		String query = "select * from usuario where usuario = ? and senha = ?";
-		
-		try(PreparedStatement pst = conn.prepareStatement(query)){
-			pst.setString(1, login.getUsuario());
-			pst.setString(2, login.getSenha());
-			
-			try(ResultSet rs = pst.executeQuery()){
-				if(rs.next())
-					return true;
-				else
-					return false;
-			} catch(SQLException e) {
-				throw new IOException();
-			}
-		} catch (SQLException e) {
-			throw new IOException();
-		}
+	public String fazerLogin(Usuario login) throws IOException{
+		Query query = manager.createQuery("select u from Usuario u where u.usuario = :usuario and u.senha = :senha");
+		query.setParameter("usuario", login.getUsuario());
+		query.setParameter("senha", login.getSenha());
+		return query.getSingleResult() != null ? "Valido" : "Invalido";
 	}
 }

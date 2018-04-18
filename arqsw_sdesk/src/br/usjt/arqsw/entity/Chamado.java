@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * 
  * @author Leandro Pinheiro de Holanda 816113762
@@ -39,9 +41,11 @@ private static final long serialVersionUID = 1L;
 	private String status;
 	
 	@Column(name="dt_abertura")
+	@JsonFormat(pattern="dd-MM-yyyy")
 	private Date dataAbertura;
 	
 	@Column(name="dt_fechamento")
+	@JsonFormat(pattern="dd-MM-yyyy")
 	private Date dataFechamento;
 	
 	@NotNull

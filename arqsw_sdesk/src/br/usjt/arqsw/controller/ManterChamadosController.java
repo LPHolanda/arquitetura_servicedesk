@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.usjt.arqsw.entity.Chamado;
 import br.usjt.arqsw.entity.Fila;
@@ -26,12 +27,14 @@ import br.usjt.arqsw.service.FilaService;
 @Controller
 @Transactional
 public class ManterChamadosController {
+	
 	@Autowired
 	private ChamadoService chamadoService;
 	
 	@Autowired
 	private FilaService filaService;
-
+	
+	
 
 	@RequestMapping("index")
 	public String inicio() {
@@ -94,6 +97,31 @@ public class ManterChamadosController {
 			model.addAttribute("numeroChamado", numeroChamado);
 			return "ChamadoSalvo";
 		}catch (IOException e) {
+			e.printStackTrace();
+			return "Erro";
+		}
+	}
+	
+	@RequestMapping("/listar_chamados_abertos")
+	public String listarChamadosAbertos(@Valid Fila fila, BindingResult result, Model model) {
+		try {
+			fila = filaService.carregar(fila.getId());
+			model.addAttribute("chamadosAbertos", listarChamadosAbertos(fila, result, model));
+			model.addAttribute("fila", fila);
+			return "ListarChamadosAbertos";
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Erro";
+		}
+	}
+
+	@Transactional
+	@RequestMapping("/fechar_chamados")
+	public String fecharChamado(@RequestParam String[] chamados) {
+		try {
+			chamadoService.fecharChamados(chamados);
+			return "ChamadoFechado";
+		} catch (IOException e) {
 			e.printStackTrace();
 			return "Erro";
 		}

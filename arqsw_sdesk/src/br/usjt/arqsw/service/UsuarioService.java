@@ -20,7 +20,7 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioDAO dao;
 	
-	public boolean fazerLogin(Usuario login) throws IOException{
+	public String fazerLogin(Usuario login) throws IOException{
 		return dao.fazerLogin(login);
 	}
 }

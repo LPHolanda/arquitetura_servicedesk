@@ -29,4 +29,16 @@ public class ChamadoService {
 	public List<Chamado> listarChamados(Fila fila) throws IOException{
 		return dao.listarChamados(fila);
 	}
+	
+	public List<Chamado> listarChamados() throws IOException{
+		return dao.listarChamados();
+	}
+	
+	public List<Chamado> listarChamadosAbertos(Fila fila) throws IOException {
+		return dao.listarChamadosAbertos(fila);
+	}
+	
+	public void fecharChamados(String[] chamados) throws IOException{
+		dao.fecharChamado(chamados);
+	}
 }
