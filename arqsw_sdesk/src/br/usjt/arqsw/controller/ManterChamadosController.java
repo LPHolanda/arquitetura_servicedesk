@@ -130,4 +130,15 @@ public class ManterChamadosController {
 	private List<Fila> listarFilas() throws IOException {
 		return filaService.listarFilas();
 	}
+	
+	@RequestMapping("/listar_filas_fechar")
+	public String listarFilhasFechar(Model model) {
+		try {
+			model.addAttribute("filas", listarFilas());
+			return "ListarFila";
+		} catch (IOException e) {
+			e.printStackTrace();
+			return "Erro";
+		}
+	}
 }

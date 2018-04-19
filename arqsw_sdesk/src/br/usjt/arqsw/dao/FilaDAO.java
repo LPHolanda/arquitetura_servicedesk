@@ -30,4 +30,17 @@ public class FilaDAO {
 	public Fila carregar(int id) throws IOException {
 		return manager.find(Fila.class, id);
 	}
+	
+	public Fila criar(Fila fila) {
+		manager.persist(fila);
+		return fila;
+	}
+
+	public void deletar(Fila fila) {
+		manager.remove(fila);
+	}
+
+	public void alterar(Fila fila) {
+		manager.merge(fila);
+	}
 }

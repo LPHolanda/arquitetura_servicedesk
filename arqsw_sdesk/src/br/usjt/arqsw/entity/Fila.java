@@ -29,6 +29,10 @@ public class Fila implements Serializable{
 	@Column(name="nm_fila")
 	private String nome;
 	
+	@Column(name="caminho_figura")
+	private String caminhoFigura;
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -41,9 +45,17 @@ public class Fila implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
+	public String getCaminhoFigura() {
+		return caminhoFigura;
+	}
+	public void setCaminhoFigura(String caminhoFigura) {
+		this.caminhoFigura = caminhoFigura;
+	}
+	
 	@Override
 	public String toString() {
-		return "Fila [id=" + id + ", nome=" + nome + "]";
+		return "Fila [id=" + id + ", nome=" + nome + ", caminhoFigura=" + caminhoFigura + "]";
 	}
+	
 	
 }
